@@ -1,7 +1,7 @@
 // ASYNC BASICS EXERCISE
 //=======================================
 // 1
-let name1 = "Luke Skywalker";
+/*let name1 = "Luke Skywalker";
 function lukeName() {
   console.log(`Question 1`);
   console.log(name1);
@@ -14,23 +14,38 @@ function luke(name1, callback) {
 luke(`Mark Hamill`, n => {
     console.log(n);
 });
-lukeName();
+lukeName(); */
+let name1 = "Luke Skywalker";
+
+function lukeName() {
+  console.log(`Q 1`);
+  console.log(name1);
+}
+ function luke(n, callback) {
+      setTimeout(() => {
+       name1 = n;
+        callback();
+      }, 1000);
+     }
+     luke(`Mark Hamill`, lukeName);
 //===================================
 // 2
 let name2 = "Han Solo";
-function hanGuy() {
+
+function hanName() {
   console.log(`Q 2`);
   console.log(name2);
 }
-function han(name2) {
-    return new Promise ((resolve, reject) => {
-        setTimeout(() => {
-            resolve(name2);
-          }, 2000);
+function han(n) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        name2 = n;
+        resolve();
+      }, 2000);
     });
-}
-han(`Harrison Ford`).then(n => console.log(n));
-hanGuy();
+  }
+  han(`Harrison Ford`)
+    .then(hanName);
 //======================================
 // 3
 let name3 = "Leia Organa";
@@ -40,12 +55,14 @@ console.log(name3);
 function leia(name3){
     return new Promise ((resolve, reject) => {
         setTimeout(() => {
-            resolve(name3);
+            name3 = n;
+            resolve();
           }, 3000);
     });
 }
 async function leiaLeia() {
-    console.log(await leia(`Carrie Fisher`));
+    await leia(`Carrie Fisher`);
+ leia();
 }
 leiaLeia();
 //=========================================
@@ -66,6 +83,8 @@ const p1 = new Promise((resolve, reject) => {
       resolve('Third Promise')
     }, 4000);
   });
-Promise.all([p1, p2, p3]).then((arr) =>{
-    console.log(arr);
-})
+
+  //Waits until the longest (Time Wise) Promise is complete before it runs the ".then" (AKA Callback function)
+  Promise.all([p1, p2, p3])
+  //The value passed in for the "values" parameter are the values returned from each of the Promises still inside an array
+  .then((values) => console.log(values));
